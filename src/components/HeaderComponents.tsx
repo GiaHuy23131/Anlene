@@ -1,28 +1,32 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../navigator/StackNavigation';
 type HeaderProps = {
     page: string;
-    isCheck?: boolean;
-    onPress?: () => void;
+    isCheck?: boolean; 
 }
+type Stack = StackNavigationProp<RootStackParamList>
 const anlene = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FAnlene.png?alt=media&token=aaa2aa9a-45e6-45b8-9741-0ea9bf7dfb02';
-const HeaderComponents = ({ page, onPress, isCheck }: HeaderProps) => {
-    const navigation = useNavigation();
+const HeaderComponents = ({ page, isCheck }: HeaderProps) => {
+    const navigation = useNavigation<Stack>();
     return (
         <View style={{
             flexDirection: 'row',
             alignItems: 'center',
-            paddingHorizontal: 20,
+
             position: 'relative'
         }}>
-            {!isCheck ? <Entypo
-                name="chevron-left"
-                size={28}
-                color="#FFFFFF"
-                style={{ position: 'absolute', left: 20 }}
-            /> : null}
+            {!isCheck ?
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute' }}>
+                    <Entypo
+                        name="chevron-left"
+                        size={28}
+                        color="#FFFFFF"
+                    />
+                </TouchableOpacity> : null}
             {/* Text page ở giữa */}
             <View style={{ flex: 1, alignItems: 'center' }}>
                 <View style={{ flexDirection: 'row' }}>
@@ -34,13 +38,15 @@ const HeaderComponents = ({ page, onPress, isCheck }: HeaderProps) => {
 
             </View>
             {!isCheck ?
-                <Entypo
-                    name="home"
-                    size={28}
-                    color="#FFFFFF"
-                    style={{ position: 'absolute', right: 20 }}
-                />
-                : <Image height={20} width={70} source={{uri: anlene}} style={{position: 'absolute', right: 20}} />
+                <TouchableOpacity onPress={() => navigation.navigate("ScreenPage1")} style={{ position: 'absolute', right: 0 }}>
+                    <Entypo
+                        name="home"
+                        size={28}
+                        color="#FFFFFF"
+                    />
+                </TouchableOpacity>
+
+                : <Image height={20} width={70} source={{ uri: anlene }} style={{ position: 'absolute', right: 20 }} />
             }
         </View>
     );

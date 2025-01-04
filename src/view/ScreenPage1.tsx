@@ -45,7 +45,8 @@ const ScreenPage1 = () => {
                             </View>
                         </SafeAreaView>
                     </ImageBackground>
-                    <ButtonComponents text='KIỂM TRA NGAY' customStyles={{ marginTop: 'auto' }} onPress={() => navigation.navigate("ScreenPage2")}  />
+                    <ButtonComponents text='KIỂM TRA NGAY' customStyles={{ marginTop: 'auto', borderRadius: 90, borderWidth: 3, borderColor: '#FFC200', backgroundColor: '#B70002', }}
+                        onPress={() => navigation.navigate("ScreenPage2")} />
                 </View>
             </ImageBackground>
             <ImageBackground source={{ uri: union2 }} style={{ flex: 0.3 }} >
