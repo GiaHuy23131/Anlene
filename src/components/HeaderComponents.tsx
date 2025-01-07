@@ -6,21 +6,29 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigator/StackNavigation';
 type HeaderProps = {
     page: string;
-    isCheck?: boolean; 
+    isCheck?: boolean;
+    onPressBack?(): void;
 }
 type Stack = StackNavigationProp<RootStackParamList>
 const anlene = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FAnlene.png?alt=media&token=aaa2aa9a-45e6-45b8-9741-0ea9bf7dfb02';
-const HeaderComponents = ({ page, isCheck }: HeaderProps) => {
+const HeaderComponents = ({ page, isCheck, onPressBack }: HeaderProps) => {
     const navigation = useNavigation<Stack>();
+    const handlePress = () => {
+        if (onPressBack) {
+            onPressBack(); // Gọi hàm onPress1 nếu có
+        }
+        else {
+            navigation.goBack()
+        }
+    };
     return (
         <View style={{
             flexDirection: 'row',
             alignItems: 'center',
-
             position: 'relative'
         }}>
             {!isCheck ?
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute' }}>
+                <TouchableOpacity onPress={() => handlePress()} style={{ position: 'absolute' }}>
                     <Entypo
                         name="chevron-left"
                         size={28}

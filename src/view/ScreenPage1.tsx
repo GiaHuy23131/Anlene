@@ -21,6 +21,9 @@ const union1 = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appsp
 const free = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2Fvoucher.png?alt=media&token=024dc6c8-8fe5-4659-94d1-c3f68ba9481c';
 const voucher = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2Ffree.png?alt=media&token=2f239423-55dd-4316-a524-dfbf9f41e4f5';
 const fiveMinutes = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FCh%E1%BB%89%205%20ph%C3%BAt.png?alt=media&token=87b1e11f-09b7-44db-b57f-2f3029f12e9c';
+const scale = appInfo.widthWindows / 375;
+
+export const normalizeFontSize = (size: any) => Math.round(size * scale);
 const ScreenPage1 = () => {
     const navigation = useNavigation<Stack>();
     return (
@@ -31,16 +34,27 @@ const ScreenPage1 = () => {
                         <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
                             <HeaderComponents page={'Trang 1/6'} isCheck={true} />
                             <View style={styles.container}>
-                                {/* <TitleComponennts >
-                                <TSpan x="50%" dy="0">TẾT BẬN RỘN</TSpan>
-                                <TSpan x="50%" dy="28">CƠ-XƯƠNG-KHỚP CÓ KHOẺ</TSpan>
-                                <TSpan x="50%" dy="28">ĐỂ CHU TOÀN?</TSpan>
-                            </TitleComponennts> */}
-                                <Text style={[styles.content, { fontSize: 30, color: '#BA872C', fontWeight: 'bold' }]}>TẾT BẬN RỘN</Text>
-                                <Text style={[styles.content, { fontSize: 30, color: '#BA872C', fontWeight: 'bold' }]}>CƠ-XƯƠNG-KHỚP CÓ KHOẺ</Text>
-                                <Text style={[styles.content, { fontSize: 30, color: '#BA872C', fontWeight: 'bold' }]}>ĐỂ CHU TOÀN?</Text>
-                                <Text style={[styles.content, { fontSize: 17, marginTop: appInfo.heightWindows * 0.01 }]}>Trăm công nghìn việc dịp cận Tết mà cơ thể nhức mỏi, làm sao chu toàn?</Text>
-                                <Text style={[styles.content, { fontSize: 17, marginTop: appInfo.heightWindows * 0.01 }]}>Ngay lúc này, <Text style={{ color: '#E8E276' }} >hãy Kiểm tra Sức khoẻ Cơ-Xương-Khớp</Text> cùng Anlene để Tết này cả nhà vui khoẻ đón Tết, trọn vẹn niềm vui.
+                                <Text style={[styles.content, styles.title]}>TẾT BẬN RỘN</Text>
+                                <Text style={[styles.content, styles.title]}>CƠ-XƯƠNG-KHỚP CÓ KHOẺ</Text>
+                                <Text style={[styles.content, styles.title]}>ĐỂ CHU TOÀN?</Text>
+                                <Text
+                                    style={[
+                                        styles.content,
+                                        { fontSize: normalizeFontSize(14), marginTop: appInfo.heightWindows * 0.01 },
+                                    ]}
+                                >
+                                    Trăm công nghìn việc dịp cận Tết mà cơ thể nhức mỏi, làm sao chu toàn?
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.content,
+                                        { fontSize: normalizeFontSize(14), marginTop: appInfo.heightWindows * 0.01 },
+                                    ]}
+                                >
+                                    Ngay lúc này,
+                                    <Text style={{ color: '#E8E276' }}> hãy Kiểm tra Sức khoẻ Cơ-Xương-Khớp
+                                    </Text>{' '}
+                                    cùng Anlene để Tết này cả nhà vui khoẻ đón Tết, trọn vẹn niềm vui.
                                 </Text>
                             </View>
                         </SafeAreaView>
@@ -74,7 +88,7 @@ const ScreenPage1 = () => {
                     </View>
                     <Text style={styles.textContent}>Bài kiểm tra Cơ, Xương, Khớp này được phát triển bởi đội ngũ Anlene</Text>
 
-                    <Text style={[styles.textContent, { marginLeft: '2%', marginRight: '2%' }]}>Lưu ý: Bài kiểm tra không dành cho đối tượng đang bị chấn thương hoặc có bệnh lý về cơ, xương, khớp hoặc tiểu đường </Text>
+                    <Text style={[styles.textContent, { marginLeft: '5%', marginRight: '5%' }]}>Lưu ý: Bài kiểm tra không dành cho đối tượng đang bị chấn thương hoặc có bệnh lý về cơ, xương, khớp hoặc tiểu đường </Text>
 
 
                 </View>
@@ -88,6 +102,11 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: '3%',
         alignItems: 'center',
+    },
+    title: {
+        fontSize: normalizeFontSize(25),
+        color: '#BA872C',
+        fontWeight: 'bold',
     },
     content: {
         color: '#FFFFFF',
@@ -113,7 +132,7 @@ const styles = StyleSheet.create({
     },
     textContent: {
         marginTop: appInfo.heightWindows * 0.02,
-        fontSize: 12,
+        fontSize: normalizeFontSize(10.5),
         color: '#FFFFFF',
         textAlign: 'center',
         flexWrap: 'wrap',

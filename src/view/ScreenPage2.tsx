@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import Svg, { Line } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
 import Feather from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../navigator/StackNavigation';
 //components
 import { HeaderComponents, ButtonComponents } from '../components';
 import { appInfo } from '../constains/appInfo';
@@ -17,11 +20,19 @@ const happyIcon = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.ap
 const sadIcon = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FSadIcon.png?alt=media&token=538a2b28-26ff-4f1a-8392-3b37f0c3bc6b';
 const checkIcon = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FGroup.png?alt=media&token=26e2ad04-573a-466b-a4a6-82473f45bc53';
 const xIcon = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FGroup%2075.png?alt=media&token=6524cc2b-cc8d-42aa-a1ce-6577936c2b21';
+//type
+type Stack = StackNavigationProp<RootStackParamList, "ScreenPage2">
+//
+const scale = appInfo.widthWindows / 375;
+
+export const normalizeFontSize = (size: any) => Math.round(size * scale);
 const ScreenPage2 = () => {
+    const navigation = useNavigation<Stack>();
     const items = ['Cơ', 'Xương', 'Khớp', 'Đề Kháng'];
     const [indexItem, setIndexItem] = useState(0);
     const [selections, setSelections] = useState<{ index: number; choice: string }[]>([]);
     const [flag, setFlag] = useState(0);
+    const [visible, setVisible] = React.useState(false);
 
     // w3246
     const handleOk = () => {
@@ -33,8 +44,8 @@ const ScreenPage2 = () => {
                         ...prev,
                         { index: indexItem, choice: 'y' }, // Lưu vị trí và lựa chọn 'y'
                     ]);
-                    setIndexItem(indexItem + 1);
                     setFlag(0);
+                    setIndexItem((prevIndex) => prevIndex + 1); // Tăng indexItem
                 }
 
             }, 500)
@@ -50,18 +61,35 @@ const ScreenPage2 = () => {
                         ...prev,
                         { index: indexItem, choice: 'n' }, // Lưu vị trí và lựa chọn 'y'
                     ]);
-                    setIndexItem(indexItem + 1);
                     setFlag(0);
+                    setIndexItem(indexItem + 1);
                 }
 
             }, 500)
         }
     }
+    //Back
+    const goBack = () => {
+        if (indexItem > 0) {
+            setIndexItem(prevIndex => Math.max(0, prevIndex - 1)); // Đảm bảo không giảm dưới 0
+            setSelections(prev => prev.filter(i => i.index !== indexItem - 1));
+        } else {
+            navigation.goBack();
+        }
+    }
+    const handleContinue = () => {
+        setVisible(false);
+        const indexCount = selections.filter(item => item.choice === 'n').length
+        // console.log('indexCount',indexCount);
+        
+        navigation.navigate("ScreenPage3", indexCount);
+    }
     const indexToUse = Math.min(indexItem, 3);
     //log
-    console.log('flag', flag);
-    console.log('replacedIndexes', selections);
-    console.log('indexItem', indexItem);
+    // console.log('flag', flag);
+    // console.log('replacedIndexes', selections);
+    // console.log('indexItem', indexItem);
+    // console.log('visible', visible);
 
     return (
 
@@ -69,8 +97,25 @@ const ScreenPage2 = () => {
             colors={['#0E470E', '#20680D', '#2E820D', '#13500E']}
             style={styles.container}
         >
+            {visible &&
+                <View style={styles.overlay}>
+                    <View style={styles.containerNoti} >
+                        <Text style={styles.title}>CẢM ƠN</Text>
+                        <Text style={styles.contentNoti}>Bạn đã tham gia bài kiểm tra sức khoẻ{'\n'} Hãy tiếp tục để có thể nhận kết quả kiểm tra sức khoẻ của bạn.</Text>
+                        <View style={{ flexDirection: 'row', gap: 20, marginTop: '3%' }}>
+                            <TouchableOpacity style={styles.buttonCancel} onPress={() => setVisible(false)}>
+                                <Text style={styles.textCancel}>HỦY</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.buttonContinue}>
+                                <Text style={styles.textContinue} onPress={() => handleContinue()}>TIẾP TỤC</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            }
             <SafeAreaView style={{ flex: 1, alignItems: 'center', marginLeft: appInfo.widthWindows * 0.05, marginRight: appInfo.widthWindows * 0.05 }}>
-                <HeaderComponents page={'Trang 2/6'} />
+
+                <HeaderComponents page={'Trang 2/6'} onPressBack={() => goBack()} />
                 <Text style={[styles.content, { fontSize: 22, fontWeight: 'bold', marginTop: appInfo.heightWindows * 0.01 }]}>KIỂM TRA CƠ - XƯƠNG - KHỚP</Text>
                 <View
                     style={{
@@ -122,7 +167,7 @@ const ScreenPage2 = () => {
                                             y2="1"
                                             stroke="#FFFFFF"
                                             strokeWidth="2"
-                                            strokeDasharray={ selections.some(item => item.index === index)  ? ' ' : `${(appInfo.widthWindows * 0.12) / 12},${(appInfo.widthWindows * 0.12) / 12}`}
+                                            strokeDasharray={selections.some(item => item.index === index) ? ' ' : `${(appInfo.widthWindows * 0.12) / 12},${(appInfo.widthWindows * 0.12) / 12}`}
                                         />
                                     </Svg>
                                 )}
@@ -151,13 +196,17 @@ const ScreenPage2 = () => {
                         <Image width={appInfo.widthWindows * 0.11} height={appInfo.heightWindows * 0.05} source={{ uri: happyIcon }} style={{ marginBottom: '10%' }} />
                         <Text style={{ color: '#FFFFFF' }}>Được</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity  style={[styles.button, { borderWidth: 2, borderColor: flag === 2 ? '#FFC200' : 'transparent' }]} onPress={() => handleNotOk()}>
+                    <TouchableOpacity style={[styles.button, { borderWidth: 2, borderColor: flag === 2 ? '#FFC200' : 'transparent' }]} onPress={() => handleNotOk()}>
                         <Image width={appInfo.widthWindows * 0.11} height={appInfo.heightWindows * 0.05} source={{ uri: sadIcon }} style={{ marginBottom: '10%' }} />
                         <Text style={{ color: '#FFFFFF' }}>Không Được</Text>
                     </TouchableOpacity>
                 </View>
-                <ButtonComponents text='XÁC NHẬN' customStyles={[styles.buttonConfirm, { backgroundColor: indexItem === 4 ? '#B70002' : '#B8B8B8' }]}
-                    disabled={indexItem === 4 ? false : true} />
+                <ButtonComponents
+                    text='XÁC NHẬN'
+                    customStyles={[styles.buttonConfirm, { backgroundColor: indexItem === 4 ? '#B70002' : '#B8B8B8' }]}
+                    disabled={indexItem === 4 ? false : true}
+                    onPress={() => setVisible(true)}
+                />
                 <Text style={[styles.content, { fontSize: 12, marginTop: appInfo.heightWindows * 0.015 }]}>
                     *Lưu ý: Hãy dừng bài tập ngay nếu cảm thấy không thoải mái. Đảm bảo vị trí tập an toàn để không té ngã.</Text>
             </SafeAreaView>
@@ -247,6 +296,64 @@ const styles = StyleSheet.create({
     },
     buttonConfirm: {
         marginTop: appInfo.heightWindows * 0.02,
+    },
+    containerNoti: {
+        position: 'absolute',
+        justifyContent: 'center', // Căn giữa theo chiều dọc
+        alignItems: 'center', // Căn giữa theo chiều ngang
+        padding: 20,
+        zIndex: 1,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 20,
+        top: '40%',
+        left: '5%',
+        right: '5%',
+
+    },
+    title: {
+        color: '#478449',
+        fontSize: normalizeFontSize(24),
+        fontWeight: 'bold',
+    },
+    overlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Lớp phủ mờ
+        justifyContent: 'center', // Căn giữa dọc
+        alignItems: 'center', // Căn giữa ngang
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        zIndex: 100, // Đảm bảo lớp phủ nằm trên cùng
+    },
+    contentNoti: {
+        textAlign: 'center',
+        flexWrap: 'wrap',
+        fontSize: normalizeFontSize(14),
+        marginLeft: '8%',
+        marginRight: '8%',
+    },
+    buttonCancel: {
+        borderRadius: 90,
+        borderWidth: 2,
+        borderColor: '#B70002',
+        width: appInfo.widthWindows * 0.35,
+        padding: 10,
+        justifyContent: 'center', // Căn giữa theo chiều dọc
+        alignItems: 'center', // Căn giữa theo chiều ngang
+    },
+    buttonContinue: {
+        borderRadius: 90,
+        backgroundColor: '#B70002',
+        width: appInfo.widthWindows * 0.35,
+        padding: 10,
+        justifyContent: 'center', // Căn giữa theo chiều dọc
+        alignItems: 'center', // Căn giữa theo chiều ngang
+    },
+    textContinue: {
+        color: '#FFFFFF',
+    },
+    textCancel: {
+        color: '#B70002',
     },
 });
 export default ScreenPage2;
