@@ -25,7 +25,7 @@ type Stack = StackNavigationProp<RootStackParamList, "ScreenPage2">
 //
 const scale = appInfo.widthWindows / 375;
 
-export const normalizeFontSize = (size: any) => Math.round(size * scale);
+const normalizeFontSize = (size: any) => Math.round(size * scale);
 const ScreenPage2 = () => {
     const navigation = useNavigation<Stack>();
     const items = ['Cơ', 'Xương', 'Khớp', 'Đề Kháng'];
@@ -106,14 +106,14 @@ const ScreenPage2 = () => {
                             <TouchableOpacity style={styles.buttonCancel} onPress={() => setVisible(false)}>
                                 <Text style={styles.textCancel}>HỦY</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.buttonContinue}>
-                                <Text style={styles.textContinue} onPress={() => handleContinue()}>TIẾP TỤC</Text>
+                            <TouchableOpacity style={styles.buttonContinue} onPress={() => handleContinue()}>
+                                <Text style={styles.textContinue} >TIẾP TỤC</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
             }
-            <SafeAreaView style={{ flex: 1, alignItems: 'center', marginLeft: appInfo.widthWindows * 0.05, marginRight: appInfo.widthWindows * 0.05 }}>
+            <SafeAreaView style={{ flex: 1, alignItems: 'center', paddingLeft: appInfo.widthWindows * 0.05, paddingRight: appInfo.widthWindows * 0.05 }}>
 
                 <HeaderComponents page={'Trang 2/6'} onPressBack={() => goBack()} />
                 <Text style={[styles.content, { fontSize: 22, fontWeight: 'bold', marginTop: appInfo.heightWindows * 0.01 }]}>KIỂM TRA CƠ - XƯƠNG - KHỚP</Text>

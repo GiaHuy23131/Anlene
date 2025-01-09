@@ -2,9 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
 import StackNavigator from './src/navigator/StackNavigation';
+import { Provider } from "react-redux";
+import { store } from './src/redux/store';
 export default function App() {
   return (
-    <StackNavigator />
+    <Provider store={store}>
+      <StackNavigator />
+    </Provider>
   );
 }
 

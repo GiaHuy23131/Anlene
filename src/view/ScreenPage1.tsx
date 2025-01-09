@@ -23,7 +23,7 @@ const voucher = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.apps
 const fiveMinutes = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FCh%E1%BB%89%205%20ph%C3%BAt.png?alt=media&token=87b1e11f-09b7-44db-b57f-2f3029f12e9c';
 const scale = appInfo.widthWindows / 375;
 
-export const normalizeFontSize = (size: any) => Math.round(size * scale);
+const normalizeFontSize = (size: any) => Math.round(size * scale);
 const ScreenPage1 = () => {
     const navigation = useNavigation<Stack>();
     return (

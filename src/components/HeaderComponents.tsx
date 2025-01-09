@@ -10,7 +10,7 @@ type HeaderProps = {
     onPressBack?(): void;
 }
 type Stack = StackNavigationProp<RootStackParamList>
-const anlene = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FAnlene.png?alt=media&token=aaa2aa9a-45e6-45b8-9741-0ea9bf7dfb02';
+const anlene = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FGroup%20207.png?alt=media&token=396baa13-44ec-4e73-bb7b-c2024af3dea1';
 const HeaderComponents = ({ page, isCheck, onPressBack }: HeaderProps) => {
     const navigation = useNavigation<Stack>();
     const handlePress = () => {
