@@ -1,25 +1,21 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Svg, { Line } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
 import Feather from 'react-native-vector-icons/Feather';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigator/StackNavigation';
 //components
 import { HeaderComponents, ButtonComponents } from '../components';
 import { appInfo } from '../constains/appInfo';
-const arrImage = [
-    'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FB%C3%A0i%20t%E1%BA%ADp%20Ki%E1%BB%83m%20Tra%20C%C6%A1%20X%C6%B0%C6%A1ng%20Kh%E1%BB%9Bp%20v%E1%BB%9Bi%20Anlene%20%20B%C3%A0i%201_1080p.png?alt=media&token=264d7c64-c6a1-4f6b-bdbc-05ba4b82be10',
-    'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FB%C3%A0i%20t%E1%BA%ADp%20Ki%E1%BB%83m%20Tra%20C%C6%A1%20X%C6%B0%C6%A1ng%20Kh%E1%BB%9Bp%20v%E1%BB%9Bi%20Anlene%20%20B%C3%A0i%201.png?alt=media&token=6d42baa9-d8fb-409a-b2df-f87195ab8eb8',
-    'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FB%C3%A0i%20t%E1%BA%ADp%20Ki%E1%BB%83m%20Tra%20C%C6%A1%20X%C6%B0%C6%A1ng%20Kh%E1%BB%9Bp%20v%E1%BB%9Bi%20Anlene%20%20B%C3%A0i%203.png?alt=media&token=e071db84-ed12-4d2f-9469-b445d2bc96f4',
-    'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FFrame%20194.png?alt=media&token=5c8d2894-d023-4bc8-a248-c9a19d6aeafa',
-]
+const image1 = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FB%C3%A0i%20t%E1%BA%ADp%20Ki%E1%BB%83m%20Tra%20C%C6%A1%20X%C6%B0%C6%A1ng%20Kh%E1%BB%9Bp%20v%E1%BB%9Bi%20Anlene%20%20B%C3%A0i%201_1080p.png?alt=media&token=264d7c64-c6a1-4f6b-bdbc-05ba4b82be10';
+const image2 = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FB%C3%A0i%20t%E1%BA%ADp%20Ki%E1%BB%83m%20Tra%20C%C6%A1%20X%C6%B0%C6%A1ng%20Kh%E1%BB%9Bp%20v%E1%BB%9Bi%20Anlene%20%20B%C3%A0i%201.png?alt=media&token=6d42baa9-d8fb-409a-b2df-f87195ab8eb8';
+const image3 = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FB%C3%A0i%20t%E1%BA%ADp%20Ki%E1%BB%83m%20Tra%20C%C6%A1%20X%C6%B0%C6%A1ng%20Kh%E1%BB%9Bp%20v%E1%BB%9Bi%20Anlene%20%20B%C3%A0i%203.png?alt=media&token=e071db84-ed12-4d2f-9469-b445d2bc96f4';
+const image4 = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FGroup%20228.png?alt=media&token=c0b7e53f-681a-44c4-b235-9d23a7920912';
 const happyIcon = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FHappyIcon.png?alt=media&token=d28c2311-e0f5-4844-98ac-04b689d7d163';
 const sadIcon = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FSadIcon.png?alt=media&token=538a2b28-26ff-4f1a-8392-3b37f0c3bc6b';
-const checkIcon = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FGroup.png?alt=media&token=26e2ad04-573a-466b-a4a6-82473f45bc53';
-const xIcon = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FGroup%2075.png?alt=media&token=6524cc2b-cc8d-42aa-a1ce-6577936c2b21';
 //type
 type Stack = StackNavigationProp<RootStackParamList, "ScreenPage2">
 //
@@ -28,11 +24,15 @@ const scale = appInfo.widthWindows / 375;
 const normalizeFontSize = (size: any) => Math.round(size * scale);
 const ScreenPage2 = () => {
     const navigation = useNavigation<Stack>();
-    const items = ['Cơ', 'Xương', 'Khớp', 'Đề Kháng'];
+    const items = [{ name: 'Cơ', uri: image1, content: "Thẳng lưng trước ghế, đứng lên ngồi xuống 5 lần từ 6-10 giây" },
+    { name: 'Xương', uri: image2, content: "Duỗi 2 tay về phía trước, từ từ cúi xuống để chạm vào mũi bàn chân" },
+    { name: 'Khớp', uri: image3, content: "Đứng rộng chân, lưng thẳng đứng, tay đưa ra sau và đan vào nhau" },
+    { name: 'Đề Kháng', uri: image4, content: "6 tháng gần đây, bạn có gặp các triệu chứng: ho, sổ mũi, cảm sốt?" }];
     const [indexItem, setIndexItem] = useState(0);
     const [selections, setSelections] = useState<{ index: number; choice: string }[]>([]);
     const [flag, setFlag] = useState(0);
-    const [visible, setVisible] = React.useState(false);
+    const [visible, setVisible] = useState(false);
+    const [loadingImages, setLoadingImages] = useState(true);
 
     // w3246
     const handleOk = () => {
@@ -48,7 +48,7 @@ const ScreenPage2 = () => {
                     setIndexItem((prevIndex) => prevIndex + 1); // Tăng indexItem
                 }
 
-            }, 500)
+            }, 500);
 
         }
     }
@@ -65,7 +65,7 @@ const ScreenPage2 = () => {
                     setIndexItem(indexItem + 1);
                 }
 
-            }, 500)
+            }, 500);
         }
     }
     //Back
@@ -81,10 +81,38 @@ const ScreenPage2 = () => {
         setVisible(false);
         const indexCount = selections.filter(item => item.choice === 'n').length
         // console.log('indexCount',indexCount);
-        
+
         navigation.navigate("ScreenPage3", indexCount);
     }
     const indexToUse = Math.min(indexItem, 3);
+    useFocusEffect(
+        useCallback(() => {
+            setIndexItem(0);
+            setSelections([]);
+        }, [])
+    );
+    useEffect(() => {
+        // Tải hình ảnh và theo dõi trạng thái
+        const prefetchImages = async () => {
+            try {
+                // Tạo một mảng các promise để tải hình ảnh
+                const images = [image1, image2, image3, image4, happyIcon, sadIcon];
+                await Promise.all(
+                    images.map((image) =>
+                        Image.prefetch(image).catch((error) => {
+                            console.error(`Error prefetching image ${image}:`, error);
+                            return null; // Không dừng cả quá trình nếu có lỗi với một ảnh
+                        })
+                    )
+                );
+                setLoadingImages(false); // Hình ảnh tải xong
+            } catch (error) {
+                console.error('Error prefetching images:', error);
+            }
+        };
+
+        prefetchImages();
+    }, []);
     //log
     // console.log('flag', flag);
     // console.log('replacedIndexes', selections);
@@ -113,10 +141,12 @@ const ScreenPage2 = () => {
                     </View>
                 </View>
             }
-            <SafeAreaView style={{ flex: 1, alignItems: 'center', paddingLeft: appInfo.widthWindows * 0.05, paddingRight: appInfo.widthWindows * 0.05 }}>
 
+            <SafeAreaView style={{ flex: 1, alignItems: 'center', paddingLeft: appInfo.widthWindows * 0.05, paddingRight: appInfo.widthWindows * 0.05 }}>
                 <HeaderComponents page={'Trang 2/6'} onPressBack={() => goBack()} />
+
                 <Text style={[styles.content, { fontSize: 22, fontWeight: 'bold', marginTop: appInfo.heightWindows * 0.01 }]}>KIỂM TRA CƠ - XƯƠNG - KHỚP</Text>
+
                 <View
                     style={{
                         flexDirection: 'row',
@@ -173,24 +203,35 @@ const ScreenPage2 = () => {
                                 )}
                             </View>
                             {/* Chữ */}
-                            <Text style={{ color: '#FFFFFF', marginTop: 5 }}>{item}</Text>
+                            <Text style={{ color: '#FFFFFF', marginTop: 5 }}>{item.name}</Text>
                         </View>
                     ))}
                 </View>
-                <Text style={[styles.content, { fontSize: 26, color: '#BA872C', fontWeight: 'bold', margin: appInfo.heightWindows * 0.01 }]}>KIỂM TRA CƠ</Text>
-                <View>
-                    {
-                        flag === 1 ? (
-                            <Image source={{ uri: checkIcon }} style={styles.checkIcon} />
-                        ) : flag === 2 ? (
-                            <Image source={{ uri: xIcon }} style={styles.checkIcon} />
-                        ) : null
-                    }
-                    <Image source={{ uri: arrImage[indexToUse] }} style={flag === 1 ? styles.image1 : flag === 2 ? styles.image2 : styles.image} />
 
-                </View>
+                <Text style={[styles.content, { fontSize: 26, color: '#ECD24A', fontWeight: 'bold', margin: appInfo.heightWindows * 0.01 }]}>KIỂM TRA CƠ</Text>
+                {
+                    loadingImages ? (
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <ActivityIndicator size="large" color="#FFFFFF" />
+                        </View>
+                    ) : (
+                        <View>
+                            {
+                                flag === 1 ? (
+                                    <View style={[styles.checkIcon, { backgroundColor: '#73A442' }]}>
+                                        <Feather name="check" size={appInfo.widthWindows * 0.08} color="#FFFFFF" />
+                                    </View>
+                                ) : flag === 2 ? (
+                                    <View style={[styles.checkIcon, { backgroundColor: '#C6463A' }]}>
+                                        <Feather name="x" size={appInfo.widthWindows * 0.08} color="#FFFFFF" />
+                                    </View>
+                                ) : null
+                            }
+                            <Image source={{ uri: items[indexToUse].uri }} style={flag === 1 ? styles.image1 : flag === 2 ? styles.image2 : styles.image} />
 
-                <Text style={[styles.content, { fontSize: 18, margin: '3%' }]}>Thẳng lưng trước ghế, đứng lên ngồi xuống 5 lần từ 6-10 giây</Text>
+                        </View>
+                    )}
+                <Text style={[styles.content, { fontSize: 18, margin: '3%' }]}>{items[indexToUse].content}</Text>
                 <View style={{ flexDirection: 'row', gap: 30 }}>
                     <TouchableOpacity style={[styles.button, { borderWidth: 2, borderColor: flag === 1 ? '#FFC200' : 'transparent' }]} onPress={() => handleOk()}>
                         <Image width={appInfo.widthWindows * 0.11} height={appInfo.heightWindows * 0.05} source={{ uri: happyIcon }} style={{ marginBottom: '10%' }} />
@@ -210,7 +251,6 @@ const ScreenPage2 = () => {
                 <Text style={[styles.content, { fontSize: 12, marginTop: appInfo.heightWindows * 0.015 }]}>
                     *Lưu ý: Hãy dừng bài tập ngay nếu cảm thấy không thoải mái. Đảm bảo vị trí tập an toàn để không té ngã.</Text>
             </SafeAreaView>
-
         </LinearGradient>
 
     )
@@ -270,13 +310,14 @@ const styles = StyleSheet.create({
     image2: {
         width: appInfo.widthWindows * 0.9,
         height: appInfo.heightWindows * 0.38,
-        borderRadius: 20,
+        borderRadius: 16,
         borderColor: '#C6463A',
         borderWidth: 4,
     },
     image: {
         width: appInfo.widthWindows * 0.9,
         height: appInfo.heightWindows * 0.38,
+        borderRadius: 16,
     },
     button: {
         backgroundColor: '#71A162',
@@ -293,6 +334,9 @@ const styles = StyleSheet.create({
         zIndex: 1,
         right: -15,
         top: -15,
+        borderRadius: 90, // Đảm bảo rằng giá trị này đủ lớn để làm tròn View
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     buttonConfirm: {
         marginTop: appInfo.heightWindows * 0.02,

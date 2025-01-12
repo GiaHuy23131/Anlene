@@ -24,11 +24,13 @@ const HeaderComponents = ({ page, isCheck, onPressBack }: HeaderProps) => {
     return (
         <View style={{
             flexDirection: 'row',
-            alignItems: 'center',
-            position: 'relative'
+            position: 'relative',
+            paddingBottom: '2%',
+            justifyContent: 'center',
+            alignSelf: 'center',
         }}>
             {!isCheck ?
-                <TouchableOpacity onPress={() => handlePress()} style={{ position: 'absolute' }}>
+                <TouchableOpacity onPress={() => handlePress()} style={{ position: 'absolute', left: 0 }}>
                     <Entypo
                         name="chevron-left"
                         size={28}
@@ -54,7 +56,7 @@ const HeaderComponents = ({ page, isCheck, onPressBack }: HeaderProps) => {
                     />
                 </TouchableOpacity>
 
-                : <Image height={20} width={70} source={{ uri: anlene }} style={{ position: 'absolute', right: 20 }} />
+                : <Image height={20} width={70} source={{ uri: anlene }} style={{ position: 'absolute', right: 0 }} />
             }
         </View>
     );
