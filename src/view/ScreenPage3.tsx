@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback  } from 'react-native'
+import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import React, { useState } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -12,7 +12,10 @@ import { addUser } from '../redux/slices/UserSlices';
 //comopents
 import { HeaderComponents, ButtonComponents } from '../components';
 //
+import { appColor } from '../constains/appColor';
 import { appInfo } from '../constains/appInfo';
+//
+import { StyleGlobal } from '../styles/StyleGlobal';
 type DataRouteProp = RouteProp<RootStackParamList, 'ScreenPage3'>;
 const anlene = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FGroup%20207.png?alt=media&token=396baa13-44ec-4e73-bb7b-c2024af3dea1';
 const scale = appInfo.widthWindows / 375;
@@ -36,6 +39,10 @@ const ScreenPage3 = () => {
     const [emailChecked, setEmailChecked] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [visible, setVisible] = useState(false);
+    //
+    const checkColor = indexCount === 1 ? appColor.green : appColor.yellow;
+    const checkBorderColor = indexCount === 1 ? appColor.green : appColor.yellow;
+    const checkTitle = indexCount === 0 ? '#BA872C' : indexCount === 1 ? appColor.green : '#DF1E13';
     //handle
     const handleContinue = () => {
         navigation.goBack();
@@ -92,7 +99,7 @@ const ScreenPage3 = () => {
     // console.log('indexCount', indexCount);
     return (
         <LinearGradient
-            colors={indexCount === 0 ? ['#0E470E', '#20680D', '#2E820D', '#13500E'] : indexCount === 1 ? ['#FD9500', '#FEBF00', '#FB8402'] : ['#969696', '#969696']}
+            colors={indexCount === 0 ? appColor.backgroundGreen : indexCount === 1 ? appColor.backgroundYellow : appColor.backgroundGrey}
             style={styles.container}
         >
             {visible &&
@@ -112,33 +119,33 @@ const ScreenPage3 = () => {
                 </View>
             }
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <SafeAreaView style={{ flex: 1, alignItems: 'center', paddingLeft: appInfo.widthWindows * 0.05, paddingRight: appInfo.widthWindows * 0.05 }}>
+                <SafeAreaView style={StyleGlobal.containerArea}>
                     <HeaderComponents page={'Trang 3/6'} onPressBack={() => setVisible(true)} />
                     <Image source={{ uri: anlene }}
                         height={normalizeFontSize(appInfo.heightWindows * 0.03)}
                         width={normalizeFontSize(appInfo.widthWindows * 0.5)}
                         resizeMode="contain"
                         style={{ marginTop: appInfo.heightWindows * 0.02, marginBottom: appInfo.heightWindows * 0.02 }} />
-                    <Text style={[styles.content, { fontSize: normalizeFontSize(13), fontWeight: 'bold', color: indexCount === 0 ? '#BA872C' : indexCount === 1 ? '#376E48' : '#DF1E13' }]}>
+                    <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(13), fontWeight: 'bold', color: checkTitle }]}>
                         HOÀN THÀNH BÀI KIỂM TRA</Text>
-                    <Text style={[styles.content, { fontSize: normalizeFontSize(26), fontWeight: 'bold', color: indexCount === 0 ? '#BA872C' : indexCount === 1 ? '#376E48' : '#DF1E13' }]}>
+                    <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(26), fontWeight: 'bold', color: checkTitle }]}>
                         {indexCount === 0 ? "XIN CHÚC MỪNG!" : "LƯU Ý MỘT CHÚT!"}</Text>
-                    <Text style={[styles.content, { fontSize: normalizeFontSize(12), marginTop: appInfo.heightWindows * 0.01 }]}
+                    <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(12), marginTop: appInfo.heightWindows * 0.01 }]}
                     >
                         {indexCount === 0 ? "Bạn có hệ Cơ-Xương-Khớp linh hoạt và có vẻ sức đề kháng của bạn cũng tốt." :
                             indexCount === 1 ? "Có vẻ bạn đang có hệ vận động tốt nhưng cần chú ý đến sức đề kháng hơn nhé..." :
                                 "Tuy rằng có vẻ bạn đang có đề kháng tốt nhưng cần quan tâm đến hệ vận động nhiều hơn nhé, bởi sau tuổi 40,..."}
                     </Text>
-                    <Text style={[styles.content, { fontSize: normalizeFontSize(15), marginTop: appInfo.heightWindows * 0.01 }]}
+                    <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(15), marginTop: appInfo.heightWindows * 0.01 }]}
                     >
                         Điền thông tin bên dưới để xem đầy đủ kết quả và nhận ngay Voucher ưu đãi lên đến 100.000đ từ Anlene.
                     </Text>
                     <View style={{ alignSelf: 'flex-start' }}>
                         <View style={styles.containerInput}>
                             <Text style={styles.label}>Họ Tên:
-                                {nameChecked && <Text style={[styles.textWarning, { color: indexCount === 1 ? '#376E48' : '#ECD24A' }]}>*</Text>}
+                                {nameChecked && <Text style={[styles.textWarning, { color: checkColor }]}>*</Text>}
                             </Text>
-                            <View style={[styles.textInput, { borderWidth: 1.5, borderColor: nameChecked ? indexCount === 1 ? '#376E48' : '#ECD24A' : '#FFFFFF' }]}>
+                            <View style={[styles.textInput, { borderWidth: 1.5, borderColor: nameChecked ? checkBorderColor : appColor.white }]}>
                                 <TextInput
                                     value={name}
                                     placeholder="Nhập họ và tên"
@@ -146,13 +153,13 @@ const ScreenPage3 = () => {
                                     style={styles.input}
                                 />
                             </View>
-                            {nameChecked && <Text style={[styles.textWarning, { color: indexCount === 1 ? '#376E48' : '#ECD24A' }]}>Vui lòng nhập họ tên</Text>}
+                            {nameChecked && <Text style={[styles.textWarning, { color: checkColor }]}>Vui lòng nhập họ tên</Text>}
                         </View>
                         <View style={styles.containerInput}>
                             <Text style={styles.label}>Số Điện Thoại:
-                                {phoneChecked && <Text style={[styles.textWarning, { color: indexCount === 1 ? '#376E48' : '#ECD24A' }]}>*</Text>}
+                                {phoneChecked && <Text style={[styles.textWarning, { color: checkColor }]}>*</Text>}
                             </Text>
-                            <View style={[styles.textInput, { borderWidth: 1.5, borderColor: phoneChecked ? indexCount === 1 ? '#376E48' : '#ECD24A' : '#FFFFFF' }]}>
+                            <View style={[styles.textInput, { borderWidth: 1.5, borderColor: phoneChecked ? checkBorderColor : appColor.white }]}>
                                 <TextInput
                                     value={numberPhone}
                                     maxLength={10}
@@ -162,11 +169,11 @@ const ScreenPage3 = () => {
                                     style={styles.input}
                                 />
                             </View>
-                            {phoneChecked && <Text style={[styles.textWarning, { color: indexCount === 1 ? '#376E48' : '#ECD24A' }]}>Vui lòng nhập số điện thoại</Text>}
+                            {phoneChecked && <Text style={[styles.textWarning, { color: checkColor }]}>Vui lòng nhập số điện thoại</Text>}
                         </View>
                         <View style={styles.containerInput}>
                             <Text style={styles.label}>Email:
-                                {emailChecked && <Text style={[styles.textWarning, { color: indexCount === 1 ? '#376E48' : '#ECD24A' }]}>*</Text>}
+                                {emailChecked && <Text style={[styles.textWarning, { color: checkColor }]}>*</Text>}
                             </Text>
                             <View style={styles.textInput}>
                                 <TextInput
@@ -176,7 +183,7 @@ const ScreenPage3 = () => {
                                     style={styles.input}
                                 />
                             </View>
-                            {emailChecked && <Text style={[styles.textWarning, { color: indexCount === 1 ? '#376E48' : '#ECD24A' }]}>Vui lòng nhập email</Text>}
+                            {emailChecked && <Text style={[styles.textWarning, { color: checkColor }]}>Vui lòng nhập email</Text>}
                         </View>
                         <View style={{ flexDirection: 'row' }}>
                             <TouchableOpacity
@@ -185,14 +192,14 @@ const ScreenPage3 = () => {
                             >
                                 {isChecked && <MaterialIcons name="check" size={normalizeFontSize(18)} color="#0E470E" />}
                             </TouchableOpacity>
-                            <Text style={{ color: '#FFFFFF', flexWrap: 'wrap', marginRight: 10, fontSize: normalizeFontSize(11) }}>
+                            <Text style={{ color: appColor.white, flexWrap: 'wrap', marginRight: 10, fontSize: normalizeFontSize(11) }}>
                                 Tôi đồng ý để Anlene Vietnam liên hệ trong bất kỳ chương trình quảng cáo sản phẩm hay khuyến mãi nào</Text>
                         </View>
-                        <Text style={{ color: '#FFFFFF', flexWrap: 'wrap', fontSize: normalizeFontSize(11), marginTop: appInfo.heightWindows * 0.01 }}>
+                        <Text style={{ color: appColor.white, flexWrap: 'wrap', fontSize: normalizeFontSize(11), marginTop: appInfo.heightWindows * 0.01 }}>
                             Bằng cách điền bảng thông tin này, tôi đồng ý với việc thông tin của mình để xử lý dựa trên chính sách bảo mật của Anlene</Text>
                     </View>
                     <ButtonComponents text='HOÀN THÀNH'
-                        customStyles={[styles.buttonConfirm, { backgroundColor: name.trim().length > 0 && numberPhone.trim().length > 0 && !nameChecked && !phoneChecked ? '#B70002' : '#B8B8B8' }]}
+                        customStyles={[styles.buttonConfirm, { backgroundColor: name.trim().length > 0 && numberPhone.trim().length > 0 && !nameChecked && !phoneChecked ? appColor.red : appColor.grey }]}
                         onPress={() => handleConfirm()}
                     />
                 </SafeAreaView>
@@ -203,25 +210,20 @@ const ScreenPage3 = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+        flexDirection: 'column',
     },
+
     title: {
         color: '#478449',
         fontSize: normalizeFontSize(24),
         fontWeight: 'bold',
-    },
-
-    content: {
-        color: '#FFFFFF',
-        textAlign: 'center',
-        flexWrap: 'wrap',
     },
     textInput: {
         width: appInfo.widthWindows * 0.9,
         height: appInfo.heightWindows * 0.055,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: appColor.white,
         borderRadius: 10,
         paddingHorizontal: 10,
         shadowColor: '#000', // Màu bóng của ô nhập liệu
@@ -240,7 +242,7 @@ const styles = StyleSheet.create({
     label: {
         fontSize: normalizeFontSize(14),
         fontWeight: 'bold',
-        color: '#FFFFFF',
+        color: appColor.white,
     },
     textWarning: {
         fontSize: normalizeFontSize(12),
@@ -253,7 +255,7 @@ const styles = StyleSheet.create({
         width: adjustedSize,
         height: adjustedSize,
         marginRight: 10,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: appColor.white,
         borderRadius: 5,
         alignSelf: 'center',
         justifyContent: 'center',
@@ -278,7 +280,7 @@ const styles = StyleSheet.create({
         alignItems: 'center', // Căn giữa theo chiều ngang
         padding: 20,
         zIndex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: appColor.white,
         borderRadius: 20,
         top: '40%',
         left: '5%',
@@ -295,7 +297,7 @@ const styles = StyleSheet.create({
     buttonCancel: {
         borderRadius: 90,
         borderWidth: 2,
-        borderColor: '#B70002',
+        borderColor: appColor.red,
         width: appInfo.widthWindows * 0.35,
         padding: 10,
         justifyContent: 'center', // Căn giữa theo chiều dọc
@@ -303,17 +305,17 @@ const styles = StyleSheet.create({
     },
     buttonContinue: {
         borderRadius: 90,
-        backgroundColor: '#B70002',
+        backgroundColor: appColor.red,
         width: appInfo.widthWindows * 0.35,
         padding: 10,
         justifyContent: 'center', // Căn giữa theo chiều dọc
         alignItems: 'center', // Căn giữa theo chiều ngang
     },
     textContinue: {
-        color: '#FFFFFF',
+        color: appColor.white,
     },
     textCancel: {
-        color: '#B70002',
+        color: appColor.red,
     },
 });
 

@@ -10,6 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { appInfo } from '../constains/appInfo';
 //comopents
 import { HeaderComponents, ButtonComponents } from '../components';
+import { appColor } from '../constains/appColor';
 type DataRouteProp = RouteProp<RootStackParamList, 'ScreenPage4'>;
 const scale = appInfo.widthWindows / 375;
 const adjustedSize = 24 / (appInfo.widthWindows / appInfo.widthWindows);
@@ -30,6 +31,8 @@ const ScreenPage4 = () => {
   //
   const [seeMore, setSeeMore] = useState(false);
   const [loadingImages, setLoadingImages] = useState(true);
+  //
+  const checkTitle = indexCount === 0 ? '#BA872C' : indexCount === 1 ? appColor.green : '#DF1E13';
   console.log('indexCount', indexCount);
   useEffect(() => {
     // Tải hình ảnh và theo dõi trạng thái
@@ -55,7 +58,7 @@ const ScreenPage4 = () => {
   }, []);
   return (
     <LinearGradient
-      colors={indexCount === 0 ? ['#0E470E', '#20680D', '#2E820D', '#13500E'] : indexCount === 1 ? ['#FD9500', '#FEBF00', '#FB8402'] : ['#969696', '#969696']}
+       colors={indexCount === 0 ? appColor.backgroundGreen : indexCount === 1 ? appColor.backgroundYellow : appColor.backgroundGrey}
       style={styles.container}
     >
       {
@@ -77,7 +80,7 @@ const ScreenPage4 = () => {
                   width={normalizeFontSize(appInfo.widthWindows * 0.5)}
                   resizeMode="contain"
                   style={{ marginTop: appInfo.heightWindows * 0.01, marginBottom: appInfo.heightWindows * 0.01 }} />
-                <Text style={[styles.content, { fontSize: normalizeFontSize(24), fontWeight: 'bold', color: indexCount === 0 ? '#BA872C' : indexCount === 1 ? '#376E48' : '#DF1E13' }]}>
+                <Text style={[styles.content, { fontSize: normalizeFontSize(24), fontWeight: 'bold', color: checkTitle }]}>
                   {indexCount === 0 ? "XIN CHÚC MỪNG!" : "LƯU Ý MỘT CHÚT!"}</Text>
                 <Text style={[styles.content, { fontSize: normalizeFontSize(13), marginTop: appInfo.heightWindows * 0.01 }]}
                 >
@@ -88,21 +91,21 @@ const ScreenPage4 = () => {
                 <View style={{ flexDirection: 'row', gap: 15, alignItems: 'center', justifyContent: 'center', marginTop: appInfo.heightWindows * 0.01 }}>
                   <View style={styles.containerCoXuongKhop}>
                     <Image source={{ uri: co }} style={styles.imageCoXuongKhop} />
-                    <LinearGradient colors={['#376E48', '#187B33']} style={styles.textContainer}>
+                    <LinearGradient colors={[appColor.green, '#187B33']} style={styles.textContainer}>
                       <Text style={styles.titleText}>KHỐI CƠ</Text>
                       <Text style={styles.subtitleText}>MẤT ĐI</Text>
                     </LinearGradient>
                   </View>
                   <View style={styles.containerCoXuongKhop}>
                     <Image source={{ uri: xuong }} style={styles.imageCoXuongKhop} />
-                    <LinearGradient colors={['#376E48', '#187B33']} style={styles.textContainer}>
+                    <LinearGradient colors={[appColor.green, '#187B33']} style={styles.textContainer}>
                       <Text style={styles.titleText}>MẬT ĐỘ XƯƠNG</Text>
                       <Text style={styles.subtitleText}>SUY GIẢM</Text>
                     </LinearGradient>
                   </View>
                   <View style={styles.containerCoXuongKhop}>
                     <Image source={{ uri: khop }} style={styles.imageCoXuongKhop} />
-                    <LinearGradient colors={['#376E48', '#187B33']} style={styles.textContainer}>
+                    <LinearGradient colors={[appColor.green, '#187B33']} style={styles.textContainer}>
                       <Text style={styles.titleText}>KHỚP</Text>
                       <Text style={styles.subtitleText}>THOÁI HOÁ</Text>
                     </LinearGradient>
@@ -116,7 +119,7 @@ const ScreenPage4 = () => {
                 <Text style={[styles.content, { fontSize: normalizeFontSize(6.11), marginBottom: appInfo.heightWindows * 0.005 }]}>*Mỗi 10 năm. Nguồn: Daly et al., 2013. BMC Geriatrics 13:71</Text>
                 <Text style={[styles.content, { fontSize: normalizeFontSize(6.11), marginBottom: appInfo.heightWindows * 0.005, width: appInfo.widthWindows * 0.5 }]}>
                   **Mỗi 5-7 năm sau khi mãn kinh. Nguồn: National Osteoporosis Foundation (2009). Hormones and Healthy Bones</Text>
-                <Text style={[styles.content, { fontWeight: 'bold', fontSize: normalizeFontSize(13), color: indexCount === 0 ? '#BA872C' : indexCount === 1 ? '#376E48' : '#DF1E13' }]}>
+                <Text style={[styles.content, { fontWeight: 'bold', fontSize: normalizeFontSize(13), color: checkTitle }]}>
                   LỰA CHỌN GIÚP CƠ-XƯƠNG-KHỚP CHẮC KHOẺ</Text>
                 <Text style={[styles.content, { fontSize: normalizeFontSize(12), width: appInfo.widthWindows * 0.8 }]}>
                   {indexCount === 0 ? "Cùng Anlene giúp bạn chăm sóc sức khoẻ Cơ-Xương-Khớp ngay hôm nay với Ưu đãi hấp dẫn đang chờ bạn!"
@@ -129,7 +132,7 @@ const ScreenPage4 = () => {
                     Cơ-Xương-Khớp chắc khỏe và tăng sức đề kháng, cho bạn thoải mái vận động, tận hưởng cuộc sống.
                   </Text>
                   ) : (
-                    <Text style={[styles.textSeeMore, { color: indexCount !== 1 ? '#ECD24A' : '#376E48' }]}>
+                    <Text style={[styles.textSeeMore, { color: indexCount !== 1 ? '#ECD24A' : appColor.green }]}>
                       Xem thêm</Text>
                   )}
 
@@ -151,12 +154,11 @@ const styles = StyleSheet.create({
   containerArea: {
     flex: 1,
     alignSelf: 'center',
-    justifyContent: 'center',
     paddingLeft: appInfo.widthWindows * 0.05,
     paddingRight: appInfo.widthWindows * 0.05
   },
   content: {
-    color: '#FFFFFF',
+    color: appColor.white,
     textAlign: 'center',
     flexWrap: 'wrap',
   },
@@ -176,14 +178,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     borderWidth: 1.5,
-    borderColor: '#FFFFFF',
+    borderColor: appColor.white,
     padding: 5,
     width: '100%',
   },
   titleText: { // Text "KHỐI CƠ"
     fontSize: normalizeFontSize(11),
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: appColor.white,
   },
   subtitleText: { // Text "MẤT ĐI"
     fontSize: normalizeFontSize(12),
@@ -195,7 +197,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     borderWidth: 1.5,
     borderColor: '#FFC200',
-    backgroundColor: '#B70002',
+    backgroundColor: appColor.red,
   },
   btnSeeMore: {
     marginBottom: appInfo.heightWindows * 0.01,

@@ -9,7 +9,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 //comopents
 import { HeaderComponents, ButtonComponents } from '../components';
 //
+import { appColor } from '../constains/appColor';
 import { appInfo } from '../constains/appInfo';
+//style
+import { StyleGlobal } from '../styles/StyleGlobal';
 const scale = appInfo.widthWindows / 375;
 const adjustedSize = 24 / (appInfo.widthWindows / appInfo.widthWindows);
 const normalizeFontSize = (size: any) => Math.round(size * scale);
@@ -53,18 +56,11 @@ const ScreenPage5 = () => {
         <View style={[styles.container, { backgroundColor: '#27750D', }]}>
             {/* LinearGradient đầu tiên */}
             <LinearGradient
-                colors={[
-                    '#0E470E',
-                    '#1F660D',
-                    '#20680D',
-                    '#236E0D',
-                    '#27750D',
-                    'rgba(46, 130, 13, 0)',
-                ]}
+                colors={appColor.colorBackgroundTop}
                 locations={[0.0, 0.2, 0.4, 0.6, 0.8, 1.0]}
                 style={[styles.gradient, { flex: 0.5 }]}
             >
-                <SafeAreaView style={styles.containerArea}>
+        <SafeAreaView style={StyleGlobal.containerArea}>
 
                     <HeaderComponents page={'Trang 5/6'} />
                     <Image source={{ uri: anlene }}
@@ -72,11 +68,11 @@ const ScreenPage5 = () => {
                         width={normalizeFontSize(appInfo.widthWindows * 0.5)}
                         resizeMode="contain"
                         style={{ marginTop: appInfo.heightWindows * 0.01, marginBottom: appInfo.heightWindows * 0.01 }} />
-                    <Text style={[styles.content, { fontSize: normalizeFontSize(22), fontWeight: 'bold', color: '#ECD24A' }]}>CHĂM SÓC CƠ-XƯƠNG-KHỚP</Text>
-                    <Text style={[styles.content, { fontSize: normalizeFontSize(18), fontWeight: 'bold', color: '#ECD24A' }]}>NHẬN LỘC SỨC KHỎE TỪ ANLENE</Text>
+                    <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(22), fontWeight: 'bold', color: appColor.yellow }]}>CHĂM SÓC CƠ-XƯƠNG-KHỚP</Text>
+                    <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(18), fontWeight: 'bold', color: appColor.yellow }]}>NHẬN LỘC SỨC KHỎE TỪ ANLENE</Text>
                     <View style={{ marginTop: appInfo.heightWindows * 0.01, alignItems: 'flex-start' }}>
-                        <Text style={[styles.content, { fontSize: normalizeFontSize(12), fontWeight: 'bold' }]}>ANLENE LÌ XÌ NGAY 100.000đ KHI ĐẶT MUA HÔM NAY!</Text>
-                        <Text style={[styles.content, { fontSize: normalizeFontSize(12) }]}>Hạn sử dụng: 25/07/2021 - 31/07/2021</Text>
+                        <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(12), fontWeight: 'bold' }]}>ANLENE LÌ XÌ NGAY 100.000đ KHI ĐẶT MUA HÔM NAY!</Text>
+                        <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(12) }]}>Hạn sử dụng: 25/07/2021 - 31/07/2021</Text>
                     </View>
 
                 </SafeAreaView>
@@ -84,7 +80,7 @@ const ScreenPage5 = () => {
             {
                 loadingImages ? (
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <ActivityIndicator size="large" color="#FFFFFF" />
+                        <ActivityIndicator size="large" color={appColor.white} />
                     </View>
                 ) : (
                     <Image
@@ -95,18 +91,11 @@ const ScreenPage5 = () => {
                 )}
             {/* LinearGradient cuối cùng */}
             <LinearGradient
-                colors={[
-                    'rgba(46, 130, 13, 0)',
-                    '#27750D',
-                    '#236E0D',
-                    '#20680D',
-                    '#1F660D',
-                    '#0E470E',
-                ]}
+                colors={appColor.colorBackgroundBottom}
                 locations={[0.0, 0.2, 0.4, 0.6, 0.8, 1.0]}
                 style={[styles.gradient, { flex: 0.5 }]}
-            >
-                <SafeAreaView style={[styles.containerArea, { marginTop: '-11%' }]}>
+            > 
+                <SafeAreaView style={[StyleGlobal.containerArea, { marginTop: '-11%' }]}>
                     <View style={styles.containerVoucher}>
                         <View style={styles.voucher}>
                             <Text style={{ color: '#73A442', fontSize: normalizeFontSize(10) }}>MÃ GIẢM GIÁ</Text>
@@ -114,7 +103,7 @@ const ScreenPage5 = () => {
                         </View>
 
                         <View style={{ alignItems: 'center', flexDirection: 'row', gap: 20 }} >
-                            <Text style={{ fontWeight: 'bold', color: '#ECD24A', fontSize: normalizeFontSize(15) }}>ÁP DỤNG TẠI</Text>
+                            <Text style={{ fontWeight: 'bold', color: appColor.yellow, fontSize: normalizeFontSize(15) }}>ÁP DỤNG TẠI</Text>
                             <Image source={{ uri: logoLazada }} style={styles.logoLazada} resizeMode='contain' />
                         </View>
                     </View>
@@ -122,10 +111,10 @@ const ScreenPage5 = () => {
                     <TouchableOpacity style={styles.btnDetail} onPress={() => navigation.navigate("ScreenPage6")}>
                         <Text style={{ fontWeight: 'bold', color: '#73A442', fontSize: normalizeFontSize(16) }}>Tìm Hiểu Ngay</Text>
                     </TouchableOpacity>
-                    <Text style={[styles.content, { fontSize: normalizeFontSize(9), marginTop: appInfo.heightWindows * 0.01 }]}>
+                    <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(9), marginTop: appInfo.heightWindows * 0.01 }]}>
                         * Voucher chỉ áp dụng cho đơn hàng mua các sản phẩm Anlene Gold 3X, Anlene Gold 5X tại gian hàng Fonterra Official Retail Store trên Lazada
                     </Text>
-                    <Text style={[styles.content, { fontSize: normalizeFontSize(9), marginTop: appInfo.heightWindows * 0.01 }]}>
+                    <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(9), marginTop: appInfo.heightWindows * 0.01 }]}>
                         * Voucher chỉ áp dụng cho đơn hàng có giá trị từ 200.000đ
                     </Text>
                 </SafeAreaView>
@@ -138,12 +127,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-    },
-    containerArea: {
-        flex: 1,
-        alignItems: 'center',
-        paddingLeft: appInfo.widthWindows * 0.05,
-        paddingRight: appInfo.widthWindows * 0.05
     },
     gradient: {
         width: '100%', // Chiều rộng toàn màn hình
@@ -158,11 +141,6 @@ const styles = StyleSheet.create({
         fontSize: normalizeFontSize(20),
         color: '#BA872C',
         fontWeight: 'bold',
-    },
-    content: {
-        color: '#FFFFFF',
-        textAlign: 'center',
-        flexWrap: 'wrap',
     },
     button: {
         padding: 15,
@@ -180,7 +158,7 @@ const styles = StyleSheet.create({
     textContent: {
         marginTop: appInfo.heightWindows * 0.02,
         fontSize: normalizeFontSize(10.5),
-        color: '#FFFFFF',
+        color: appColor.white,
         textAlign: 'center',
         flexWrap: 'wrap',
     },
@@ -188,7 +166,7 @@ const styles = StyleSheet.create({
         paddingTop: '3%',
         width: '100%',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: appColor.white,
         zIndex: 1,
     },
     containerVoucher: {
@@ -196,7 +174,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
-        borderColor: '#FFFFFF',
+        borderColor: appColor.white,
         borderRadius: 6,
         zIndex: 1,
     },
@@ -206,13 +184,13 @@ const styles = StyleSheet.create({
     },
     buttonConfirm: {
         marginTop: appInfo.heightWindows * 0.01,
-        backgroundColor: '#B70002',
+        backgroundColor: appColor.red,
     },
     btnDetail: {
         borderRadius: 24,
         borderWidth: 1.5,
         borderColor: '#73A442',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: appColor.white,
         paddingLeft: '7%',
         paddingRight: '7%',
         paddingTop: '1%',

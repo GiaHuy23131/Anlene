@@ -9,7 +9,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigator/StackNavigation';
 //components
 import { HeaderComponents, ButtonComponents } from '../components';
+//constains
+import { appColor } from '../constains/appColor';
 import { appInfo } from '../constains/appInfo';
+//
+import { StyleGlobal } from '../styles/StyleGlobal';
+//
 const image1 = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FB%C3%A0i%20t%E1%BA%ADp%20Ki%E1%BB%83m%20Tra%20C%C6%A1%20X%C6%B0%C6%A1ng%20Kh%E1%BB%9Bp%20v%E1%BB%9Bi%20Anlene%20%20B%C3%A0i%201_1080p.png?alt=media&token=264d7c64-c6a1-4f6b-bdbc-05ba4b82be10';
 const image2 = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FB%C3%A0i%20t%E1%BA%ADp%20Ki%E1%BB%83m%20Tra%20C%C6%A1%20X%C6%B0%C6%A1ng%20Kh%E1%BB%9Bp%20v%E1%BB%9Bi%20Anlene%20%20B%C3%A0i%201.png?alt=media&token=6d42baa9-d8fb-409a-b2df-f87195ab8eb8';
 const image3 = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FB%C3%A0i%20t%E1%BA%ADp%20Ki%E1%BB%83m%20Tra%20C%C6%A1%20X%C6%B0%C6%A1ng%20Kh%E1%BB%9Bp%20v%E1%BB%9Bi%20Anlene%20%20B%C3%A0i%203.png?alt=media&token=e071db84-ed12-4d2f-9469-b445d2bc96f4';
@@ -142,10 +147,10 @@ const ScreenPage2 = () => {
                 </View>
             }
 
-            <SafeAreaView style={{ flex: 1, alignItems: 'center', paddingLeft: appInfo.widthWindows * 0.05, paddingRight: appInfo.widthWindows * 0.05 }}>
+            <SafeAreaView style={StyleGlobal.containerArea}>
                 <HeaderComponents page={'Trang 2/6'} onPressBack={() => goBack()} />
 
-                <Text style={[styles.content, { fontSize: 22, fontWeight: 'bold', marginTop: appInfo.heightWindows * 0.01 }]}>KIỂM TRA CƠ - XƯƠNG - KHỚP</Text>
+                <Text style={[StyleGlobal.content, { fontSize: 22, fontWeight: 'bold', marginTop: appInfo.heightWindows * 0.01 }]}>KIỂM TRA CƠ - XƯƠNG - KHỚP</Text>
 
                 <View
                     style={{
@@ -165,12 +170,12 @@ const ScreenPage2 = () => {
                                 {
                                     selections[index]?.choice === 'y' ? (
                                         <LinearGradient colors={['#73A442', '#478449']} style={styles.circle}>
-                                            <Feather name="check" size={appInfo.widthWindows * 0.05} color="#FFFFFF" />
+                                            <Feather name="check" size={appInfo.widthWindows * 0.05} color={appColor.white} />
                                         </LinearGradient>
 
                                     ) : selections[index]?.choice === 'n' ? (
                                         <View style={[styles.circle, { backgroundColor: '#C6463A' }]}>
-                                            <Feather name="x" size={appInfo.widthWindows * 0.05} color="#FFFFFF" />
+                                            <Feather name="x" size={appInfo.widthWindows * 0.05} color={appColor.white} />
                                         </View>
 
                                     ) : (
@@ -180,7 +185,7 @@ const ScreenPage2 = () => {
                                                     <View style={styles.circleInner} />
                                                 ) : null
                                             ) : (
-                                                <Text style={{ color: '#FFFFFF' }}>{index + 1}</Text>
+                                                <Text style={{ color: appColor.white }}>{index + 1}</Text>
                                             )}
                                         </View>
                                     )
@@ -195,7 +200,7 @@ const ScreenPage2 = () => {
                                             y1="1"
                                             x2={appInfo.widthWindows * 0.145}
                                             y2="1"
-                                            stroke="#FFFFFF"
+                                            stroke={appColor.white}
                                             strokeWidth="2"
                                             strokeDasharray={selections.some(item => item.index === index) ? ' ' : `${(appInfo.widthWindows * 0.12) / 12},${(appInfo.widthWindows * 0.12) / 12}`}
                                         />
@@ -203,27 +208,27 @@ const ScreenPage2 = () => {
                                 )}
                             </View>
                             {/* Chữ */}
-                            <Text style={{ color: '#FFFFFF', marginTop: 5 }}>{item.name}</Text>
+                            <Text style={{ color: appColor.white, marginTop: 5 }}>{item.name}</Text>
                         </View>
                     ))}
                 </View>
 
-                <Text style={[styles.content, { fontSize: 26, color: '#ECD24A', fontWeight: 'bold', margin: appInfo.heightWindows * 0.01 }]}>KIỂM TRA CƠ</Text>
+                <Text style={[StyleGlobal.content, { fontSize: 26, color: appColor.yellow, fontWeight: 'bold', margin: appInfo.heightWindows * 0.01 }]}>KIỂM TRA CƠ</Text>
                 {
                     loadingImages ? (
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <ActivityIndicator size="large" color="#FFFFFF" />
+                            <ActivityIndicator size="large" color={appColor.white} />
                         </View>
                     ) : (
                         <View>
                             {
                                 flag === 1 ? (
                                     <View style={[styles.checkIcon, { backgroundColor: '#73A442' }]}>
-                                        <Feather name="check" size={appInfo.widthWindows * 0.08} color="#FFFFFF" />
+                                        <Feather name="check" size={appInfo.widthWindows * 0.08} color={appColor.white} />
                                     </View>
                                 ) : flag === 2 ? (
                                     <View style={[styles.checkIcon, { backgroundColor: '#C6463A' }]}>
-                                        <Feather name="x" size={appInfo.widthWindows * 0.08} color="#FFFFFF" />
+                                        <Feather name="x" size={appInfo.widthWindows * 0.08} color={appColor.white} />
                                     </View>
                                 ) : null
                             }
@@ -231,24 +236,24 @@ const ScreenPage2 = () => {
 
                         </View>
                     )}
-                <Text style={[styles.content, { fontSize: 18, margin: '3%' }]}>{items[indexToUse].content}</Text>
+                <Text style={[StyleGlobal.content, { fontSize: 18, margin: '3%' }]}>{items[indexToUse].content}</Text>
                 <View style={{ flexDirection: 'row', gap: 30 }}>
                     <TouchableOpacity style={[styles.button, { borderWidth: 2, borderColor: flag === 1 ? '#FFC200' : 'transparent' }]} onPress={() => handleOk()}>
                         <Image width={appInfo.widthWindows * 0.11} height={appInfo.heightWindows * 0.05} source={{ uri: happyIcon }} style={{ marginBottom: '10%' }} />
-                        <Text style={{ color: '#FFFFFF' }}>Được</Text>
+                        <Text style={{ color: appColor.white }}>Được</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.button, { borderWidth: 2, borderColor: flag === 2 ? '#FFC200' : 'transparent' }]} onPress={() => handleNotOk()}>
                         <Image width={appInfo.widthWindows * 0.11} height={appInfo.heightWindows * 0.05} source={{ uri: sadIcon }} style={{ marginBottom: '10%' }} />
-                        <Text style={{ color: '#FFFFFF' }}>Không Được</Text>
+                        <Text style={{ color: appColor.white }}>Không Được</Text>
                     </TouchableOpacity>
                 </View>
                 <ButtonComponents
                     text='XÁC NHẬN'
-                    customStyles={[styles.buttonConfirm, { backgroundColor: indexItem === 4 ? '#B70002' : '#B8B8B8' }]}
+                    customStyles={[styles.buttonConfirm, { backgroundColor: indexItem === 4 ? appColor.red : appColor.grey }]}
                     disabled={indexItem === 4 ? false : true}
                     onPress={() => setVisible(true)}
                 />
-                <Text style={[styles.content, { fontSize: 12, marginTop: appInfo.heightWindows * 0.015 }]}>
+                <Text style={[StyleGlobal.content, { fontSize: 12, marginTop: appInfo.heightWindows * 0.015 }]}>
                     *Lưu ý: Hãy dừng bài tập ngay nếu cảm thấy không thoải mái. Đảm bảo vị trí tập an toàn để không té ngã.</Text>
             </SafeAreaView>
         </LinearGradient>
@@ -258,17 +263,12 @@ const ScreenPage2 = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-    },
-    content: {
-        color: '#FFFFFF',
-        textAlign: 'center',
-        flexWrap: 'wrap',
+        flexDirection: 'column',
     },
     circle: {
         borderRadius: 90, // Đảm bảo rằng giá trị này đủ lớn để làm tròn View
         borderWidth: 1.5,
-        borderColor: '#FFFFFF',
+        borderColor: appColor.white,
         width: appInfo.widthWindows * 0.080,  // Chiều rộng của View, đủ lớn để thấy dạng tròn
         height: appInfo.widthWindows * 0.080, // Chiều cao của View, bằng chiều rộng để tạo hình tròn hoàn hảo
         alignItems: 'center', // Căn chỉnh nội dung ngang
@@ -278,17 +278,17 @@ const styles = StyleSheet.create({
         width: appInfo.widthWindows * 0.045,  // Chiều rộng của View, đủ lớn để thấy dạng tròn
         height: appInfo.widthWindows * 0.045, // Chiều cao của View, bằng chiều rộng để tạo hình tròn hoàn hảo
         borderRadius: 90,
-        backgroundColor: "#ECD24A",
+        backgroundColor: appColor.yellow,
     },
     circleCheck: {
         borderRadius: 90, // Đảm bảo rằng giá trị này đủ lớn để làm tròn View
         borderWidth: 2,
-        borderColor: '#ECD24A',
+        borderColor: appColor.yellow,
         width: appInfo.widthWindows * 0.080,  // Chiều rộng của View, đủ lớn để thấy dạng tròn
         height: appInfo.widthWindows * 0.080, // Chiều cao của View, bằng chiều rộng để tạo hình tròn hoàn hảo
         alignItems: 'center', // Căn chỉnh nội dung ngang
         justifyContent: 'center', // Căn chỉnh nội dung dọc
-        backgroundColor: '#FFFFFF',
+        backgroundColor: appColor.white,
     },
     circleX: {
         borderRadius: 90, // Đảm bảo rằng giá trị này đủ lớn để làm tròn View
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
         height: appInfo.widthWindows * 0.080, // Chiều cao của View, bằng chiều rộng để tạo hình tròn hoàn hảo
         alignItems: 'center', // Căn chỉnh nội dung ngang
         justifyContent: 'center', // Căn chỉnh nội dung dọc
-        backgroundColor: '#FFFFFF',
+        backgroundColor: appColor.white,
     },
     image1: {
         width: appInfo.widthWindows * 0.9,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
         alignItems: 'center', // Căn giữa theo chiều ngang
         padding: 20,
         zIndex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: appColor.white,
         borderRadius: 20,
         top: '40%',
         left: '5%',
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
     buttonCancel: {
         borderRadius: 90,
         borderWidth: 2,
-        borderColor: '#B70002',
+        borderColor: appColor.red,
         width: appInfo.widthWindows * 0.35,
         padding: 10,
         justifyContent: 'center', // Căn giữa theo chiều dọc
@@ -387,17 +387,17 @@ const styles = StyleSheet.create({
     },
     buttonContinue: {
         borderRadius: 90,
-        backgroundColor: '#B70002',
+        backgroundColor: appColor.red,
         width: appInfo.widthWindows * 0.35,
         padding: 10,
         justifyContent: 'center', // Căn giữa theo chiều dọc
         alignItems: 'center', // Căn giữa theo chiều ngang
     },
     textContinue: {
-        color: '#FFFFFF',
+        color: appColor.white,
     },
     textCancel: {
-        color: '#B70002',
+        color: appColor.red,
     },
 });
 export default ScreenPage2;

@@ -5,7 +5,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 //comopents
 import { HeaderComponents } from '../components';
 //
+import { appColor } from '../constains/appColor';
 import { appInfo } from '../constains/appInfo';
+///
+import { StyleGlobal } from '../styles/StyleGlobal';
 const anlene = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2FGroup%20207.png?alt=media&token=396baa13-44ec-4e73-bb7b-c2024af3dea1';
 const anleneMilk = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Group%20310.png?alt=media&token=d1084778-d1da-450c-8239-cc958f0467fb';
 const xuong = 'https://firebasestorage.googleapis.com/v0/b/terrianfirefly.appspot.com/o/Anlene%2Fco%20CX-02.png?alt=media&token=ae032a75-6068-45f2-b536-cffbcee1d7b1';
@@ -46,10 +49,10 @@ const ScreenPage6 = () => {
             {
                 loadingImages ? (
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <ActivityIndicator size="large" color="#FFFFFF" />
+                        <ActivityIndicator size="large" color={appColor.white} />
                     </View>
                 ) : (
-                    <SafeAreaView style={styles.containerArea}>
+                    <SafeAreaView style={StyleGlobal.containerArea}>
                         <HeaderComponents page={'Trang 6/6'} />
                         <ScrollView showsVerticalScrollIndicator={false}>
                             <View style={styles.container}>
@@ -59,10 +62,10 @@ const ScreenPage6 = () => {
                                     width={normalizeFontSize(appInfo.widthWindows * 0.5)}
                                     resizeMode="contain"
                                     style={{ marginTop: appInfo.heightWindows * 0.01, marginBottom: appInfo.heightWindows * 0.01 }} />
-                                <Text style={[styles.content, { fontSize: normalizeFontSize(24), fontWeight: 'bold', color: '#ECD24A' }]}>THÔNG TIN SẢN PHẨM</Text>
-                                <Text style={[styles.content, { fontSize: normalizeFontSize(18), fontWeight: 'bold', color: '#ECD24A' }]}>SỮA ANLENE 3 KHỎE</Text>
+                                <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(24), fontWeight: 'bold', color: appColor.yellow }]}>THÔNG TIN SẢN PHẨM</Text>
+                                <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(18), fontWeight: 'bold', color: appColor.yellow }]}>SỮA ANLENE 3 KHỎE</Text>
                                 <Image source={{ uri: anleneMilk }} style={styles.imageAnlenMilk} resizeMode='contain' />
-                                <Text style={[styles.content, { fontSize: normalizeFontSize(14) }]}
+                                <Text style={[StyleGlobal.content, { fontSize: normalizeFontSize(14) }]}
                                 >Uống 2 ly Anlene mỗi ngày để bổ sung dinh dưỡng, tăng cường đề kháng đồng thời duy trì thói quen tập thể dục mỗi ngày để giúp hệ Cơ-Xương-Khớp chắc khoẻ, thoải mái tận hưởng cuộc sống năng động, chẳng ngại “rào cản” tuổi tác.</Text>
                                 <View style={styles.frame}>
                                     <Image source={{ uri: xuong }} style={styles.image} resizeMode='contain' />
@@ -75,7 +78,7 @@ const ScreenPage6 = () => {
                                 </View>
                             </View>
                         </ScrollView>
-                    </SafeAreaView>
+                    </SafeAreaView>  
                 )
             }
         </LinearGradient>
@@ -86,17 +89,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
     },
-    containerArea: {
-        flex: 1,
-        alignItems: 'center',
-        paddingLeft: appInfo.widthWindows * 0.05,
-        paddingRight: appInfo.widthWindows * 0.05
-    },
-    content: {
-        color: '#FFFFFF',
-        textAlign: 'center',
-        flexWrap: 'wrap',
-    },
     imageAnlenMilk: {
         width: appInfo.widthWindows * 0.9,
         height: appInfo.heightWindows * 0.3,
@@ -104,7 +96,7 @@ const styles = StyleSheet.create({
     frame: {
         borderRadius: 12,
         borderWidth: 2.4,
-        borderColor: '#ECD24A',
+        borderColor: appColor.yellow,
         width: appInfo.widthWindows * 0.8,
         height: appInfo.heightWindows * 0.2,
         marginTop: appInfo.heightWindows * 0.02,
